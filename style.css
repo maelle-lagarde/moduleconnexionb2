@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700&display=swap');
+
+body {
+    background: linear-gradient(90deg, rgba(247,216,98,1) 0%, rgba(238,98,181,1) 100%);
+}
+
+h1 {
+    font-family: 'Syne', sans-serif;
+    color: blueviolet;
+    font-weight: 700;
+}
+
+p {
+    font-family: 'Syne', sans-serif;
+    font-weight: 400;
+    color: dimgray;
+    margin-bottom: 50px;
+}
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-content: center;
+    background-color: white;
+    border: solid blueviolet;
+    width: 40%;
+    padding: 40px;
+}
+
+.button {
+    padding: 10px 40px;
+    border: solid blueviolet;
+    color: blueviolet;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: 0.5s;
+}
+
+.button:hover {
+    background-color: blueviolet;
+    color: white;
+}
+
+a {
+    text-transform: lowercase;
+    letter-spacing: 2px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+input {
+    font-family: 'Syne', sans-serif;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+}
+
+input#button {
+    padding: 10px 20px;
+    border: solid blueviolet;
+    background-color: white;
+    color: blueviolet;
+    text-transform: lowercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 15px;
+    transition: 0.5s;
+}
+
+input#button:hover {
+    background-color: blueviolet;
+    color: white;
+}
