@@ -1,7 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700&display=swap');
 
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background: linear-gradient(90deg, rgba(247,216,98,1) 0%, rgba(238,98,181,1) 100%);
+    background: linear-gradient(90deg, rgba(136,85,245,1) 0%, rgba(237,148,201,1) 50%);
 }
 
 h1 {
@@ -30,7 +36,7 @@ p {
     align-content: center;
     background-color: white;
     border: solid blueviolet;
-    width: 40%;
+    width: 30%;
     padding: 40px;
 }
 
@@ -79,4 +85,52 @@ input#button {
 input#button:hover {
     background-color: blueviolet;
     color: white;
+}
+
+.nav {
+    width: 100%;
+    background-color: rgb(18, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid white;
+}
+
+.nav-left {
+    border-right: solid white;
+    height: auto;
+    padding: 10px 20px;
+    transition: 0.5s;
+}
+
+.nav a {
+    color: white;
+}
+
+.nav-left:hover {
+    background-color: blueviolet;
+}
+
+.nav-left a:hover {
+    color: white;
+}
+
+.nav-right {
+    border-left: solid white;
+    height: auto;
+    padding: 10px 20px;
+    transition: 0.5s;
+}
+
+.nav-right:hover {
+    background-color: blueviolet;
+}
+
+.nav-right a:hover {
+    color: white;
+}
+
+
+.nav a {
+    text-decoration: none;
 }

@@ -8,7 +8,7 @@ class User {
     private $db;
 
     public function __construct() {
-        // Initialisation de la connexion à la base de données
+        // initialisation de la connexion à la base de données.
         $dbHost = 'localhost';
         $dbName = 'moduleconnexionb2';
         $dbUser = 'root';
@@ -23,38 +23,40 @@ class User {
     }
 
     public function register($firstname, $lastname, $login, $password) {
-        // Valider les données
+        // valider les données.
         if (!$this->isValidPassword($password)) {
             return false;
         }
 
-        // Vérifier si le login est déjà utilisé
+        // vérifier si le login est déjà utilisé.
         if ($this->isLoginTaken($login)) {
             return false;
         }
 
-        // Hasher le mot de passe
+        // hasher le mot de passe.
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insérer les données dans la base de données
+        // insérer les données dans la base de données.
         $stmt = $this->db->prepare("INSERT INTO user (firstname, lastname, login, password) VALUES (?, ?, ?, ?)");
         $stmt->execute([$firstname, $lastname, $login, $hashedPassword]);
         return true;
     }
 
     public function login($login, $password) {
-        // Récupérer l'utilisateur par son login
+        // récupérer l'utilisateur par son login.
         $stmt = $this->db->prepare("SELECT * FROM user WHERE login = ?");
         $stmt->execute([$login]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
-            // Les informations de connexion sont correctes
+            // les informations de connexion sont correctes.
+   
             $this->id = $user['id'];
             $this->firstname = $user['firstname'];
             $this->lastname = $user['lastname'];
             $this->login = $user['login'];
             $this->password = $user['password'];
+
             return true;
         } else {
             return false;
@@ -62,13 +64,13 @@ class User {
     }
 
     public function updateProfile($firstname, $lastname) {
-        // Mettre à jour les informations du profil dans la base de données
+        // mettre à jour les informations du profil dans la base de données.
         $stmt = $this->db->prepare("UPDATE user SET firstname = ?, lastname = ? WHERE id = ?");
         $stmt->execute([$firstname, $lastname, $this->id]);
     }
 
     public static function getAllUsers() {
-        // Récupérer tous les utilisateurs de la base de données
+        // récupérer tous les utilisateurs de la base de données.
         $dbHost = 'localhost';
         $dbName = 'moduleconnexionb2';
         $dbUser = 'root';
@@ -86,16 +88,20 @@ class User {
     }
 
     private function isValidPassword($password) {
-        // Valider que le mot de passe a au moins 8 caractères, une majuscule, un chiffre et un caractère spécial
+        // valider que le mot de passe a au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.
         return preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password);
     }
 
     private function isLoginTaken($login) {
-        // Vérifier si le login est déjà utilisé
+        // vérifier si le login est déjà utilisé.
         $stmt = $this->db->prepare("SELECT COUNT(*) FROM user WHERE login = ?");
         $stmt->execute([$login]);
         $count = $stmt->fetchColumn();
         return $count > 0;
+    }
+
+    public function getLogin() {
+        return $this->login;
     }
 }
 ?>

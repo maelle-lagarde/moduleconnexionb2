@@ -5,6 +5,12 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+
+    <div class="nav">
+        <div class="nav-left"><a href="index.php">Accueil</a></div>
+        <div class="nav-right"><a href="#logout">Déconnexion</a></div>
+    </div>
+
     <div class="box">
         <h1>Connexion</h1>
         <form action="process-connexion.php" method="post">

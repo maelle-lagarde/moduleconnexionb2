@@ -4,8 +4,8 @@ session_start();
 
 require_once 'User.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']->getLogin() !== 'admin') {
-    header('Location: connexion.php');
+if (!isset($_SESSION['user']) || $_SESSION['user']->getLogin() !== 'admiN1337$') {
+    header('Location: index.php');
     exit();
 }
 
@@ -20,6 +20,12 @@ $users = User::getAllUsers();
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+
+    <div class="nav">
+        <div class="nav-left"><a href="index.php">Accueil</a></div>
+        <div class="nav-right"><a href="#logout">Déconnexion</a></div>
+    </div>
+
     <div class="box">
         <h1>Administration</h1>
         <table>
