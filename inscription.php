@@ -1,3 +1,20 @@
+<?php
+
+require_once 'User.php';
+
+// ob_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user = new User();
+    $user->register($_POST['firstname'], $_POST['lastname'], $_POST['login'], $_POST['password']);
+    header('Location: connexion.php');
+    exit();
+}
+
+// ob_end_flush();
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +25,12 @@
 
     <div class="nav">
         <div class="nav-left"><a href="index.php">Accueil</a></div>
-        <div class="nav-right"><a href="#logout">Déconnexion</a></div>
+        <div class="nav-right"><a href="logout.php">Déconnexion</a></div>
     </div>
 
     <div class="box">
        <h1>Inscription</h1>
-        <form action="process-inscription.php" method="post">
+        <form action="inscription.php" method="post">
             <input type="text" name="firstname" placeholder="Prénom" required><br>
             <input type="text" name="lastname" placeholder="Nom" required><br>
             <input type="text" name="login" placeholder="Login" required><br>

@@ -8,7 +8,7 @@
     
     <div class="nav">
         <div class="nav-left"><a href="index.php">Accueil</a></div>
-        <div class="nav-right"><a href="#logout">Déconnexion</a></div>
+        <div class="nav-right"><a href="logout.php">Déconnexion</a></div>
     </div>
 
     <div class="box">
