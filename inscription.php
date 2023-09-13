@@ -2,16 +2,16 @@
 
 require_once 'User.php';
 
-// ob_start();
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = new User();
     $user->register($_POST['firstname'], $_POST['lastname'], $_POST['login'], $_POST['password']);
-    header('Location: connexion.php');
-    exit();
-}
 
-// ob_end_flush();
+    echo '<script>
+              alert("Inscription réussie ! Vous allez être redirigé vers la page de connexion.");
+              window.location.href = "connexion.php";
+          </script>';
+    
+}
 
 ?>
 
@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Inscription</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon"/>
 </head>
 <body>
 

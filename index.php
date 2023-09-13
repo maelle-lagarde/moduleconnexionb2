@@ -3,6 +3,7 @@
 <head>
     <title>Accueil</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon"/>
 </head>
 <body>
     

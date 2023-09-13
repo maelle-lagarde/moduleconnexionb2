@@ -2,8 +2,6 @@
 
 require_once 'User.php';
 
-// ob_start();
-
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -11,23 +9,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($user->login($_POST['login'], $_POST['password'])) {
         $_SESSION['user'] = $user;
-        // var_dump('coucou you');
 
-        if ($user->login === 'admiN1337$') { 
-            header('Location: admin.php');
-            exit();
+        if ($user->isAdmin()) { 
+            echo'<script>
+                    alert("Connexion en tant que administrateur réussie ! Vous allez être redirigé vers la page administration.");
+                    window.location.href = "admin.php";
+                </script>';
         } else {
-            var_dump('coucou toi');
-            header('Location: profil.php');
-            exit();
+            echo'<script>
+                    alert("Connexion réussie ! Vous allez être redirigé vers votre profil.");
+                    window.location.href = "profil.php";
+                </script>';
         }
         
     } else {
         echo "Échec de la connexion. Vérifiez vos informations.";
     }
 }
-
-// ob_end_flush();
 
 ?>
 
@@ -36,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Connexion</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon"/>
 </head>
 <body>
 

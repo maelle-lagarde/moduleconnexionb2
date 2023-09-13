@@ -5,6 +5,7 @@ class User {
     private $lastname;
     private $login;
     private $password;
+    private $role;
     private $db;
 
     public function __construct() {
@@ -103,5 +104,21 @@ class User {
     public function getLogin() {
         return $this->login;
     }
+
+    public function isAdmin() {
+        // préparez la requête SQL pour récupérer l'utilisateur par son rôle.
+        $stmt = $this->db->prepare("SELECT * FROM user WHERE role = 'admin'");
+        $stmt->execute();
+        
+        // récupérez le résultat de la requête.
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        // vérifiez si un utilisateur avec le rôle 'admin' a été trouvé.
+        if ($user) {
+            return true;
+        }
+        return false;
+    }
+
 }
 ?>

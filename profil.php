@@ -5,8 +5,12 @@ session_start();
 require_once 'User.php';
 
 if (!isset($_SESSION['user'])) {
-    header('Location: index.php');
-    exit();
+    
+    echo '<script>
+              alert("Inscrivez-vous ou connectez-vous pour accéder au site.");
+              window.location.href = "index.php";
+          </script>';
+
 }
 
 $user = $_SESSION['user'];
@@ -21,12 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Profil</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon"/>
 </head>
 <body>
 
     <div class="nav">
         <div class="nav-left"><a href="index.php">Accueil</a></div>
-        <div class="nav-right"><a href="#logout">Déconnexion</a></div>
+        <div class="nav-right"><a href="logout.php">Déconnexion</a></div>
     </div>
 
     <div class="box">

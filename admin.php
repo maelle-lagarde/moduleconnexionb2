@@ -5,8 +5,12 @@ session_start();
 require_once 'User.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']->getLogin() !== 'admiN1337$') {
-    header('Location: index.php');
-    exit();
+    
+    echo '<script>
+              alert("Informations incorrectes, connectez-vous en admin pour accéder à cette page site.");
+              window.location.href = "index.php";
+          </script>';
+
 }
 
 $users = User::getAllUsers();
@@ -18,6 +22,7 @@ $users = User::getAllUsers();
 <head>
     <title>Administration</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon"/>
 </head>
 <body>
 
