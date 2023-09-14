@@ -4,26 +4,30 @@ require_once 'User.php';
 
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['login']) && isset($_POST['password'])) {
     $user = new User();
-    
-    if ($user->login($_POST['login'], $_POST['password'])) {
+    $login = $_POST['login'];
+    $password = $_POST['password'];
+
+    if ($user->login($login, $password)) {
         $_SESSION['user'] = $user;
 
-        if ($user->isAdmin()) { 
-            echo'<script>
-                    alert("Connexion en tant que administrateur réussie ! Vous allez être redirigé vers la page administration.");
-                    window.location.href = "admin.php";
-                </script>';
+        if ($_SESSION['user']['login'] === 'admiN1337$')  {
+            echo '<script>
+                     alert("Connexion en tant qu\'administrateur réussie ! Vous allez être redirigé vers la page administration.");
+                     window.location.href = "admin.php";
+                  </script>';
         } else {
-            echo'<script>
-                    alert("Connexion réussie ! Vous allez être redirigé vers votre profil.");
-                    window.location.href = "profil.php";
-                </script>';
+            echo '<script>
+                     alert("Connexion réussie ! Vous allez être redirigé vers votre profil.");
+                     window.location.href = "profil.php";
+                  </script>';
         }
-        
     } else {
-        echo "Échec de la connexion. Vérifiez vos informations.";
+        echo '<script>
+                 alert("Échec de la connexion. Vérifiez vos informations.");
+                 window.location.href = "connexion.php"; // Redirige vers la page de connexion
+              </script>';
     }
 }
 
@@ -48,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="connexion.php" method="post">
             <input type="text" name="login" placeholder="Login" required><br>
             <input type="password" name="password" placeholder="Mot de passe" required><br>
-            <input id="button" type="submit" value="Connexion">
+            <input id="button" type="submit" value="Connexion" name="login-process">
         </form>
     </div>
 </body>

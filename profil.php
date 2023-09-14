@@ -4,20 +4,39 @@ session_start();
 
 require_once 'User.php';
 
-if (!isset($_SESSION['user'])) {
-    
-    echo '<script>
-              alert("Inscrivez-vous ou connectez-vous pour accéder au site.");
-              window.location.href = "index.php";
-          </script>';
-
-}
-
-$user = $_SESSION['user'];
+$user = new User();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user->updateProfile($_POST['firstname'], $_POST['lastname']);
+    if (isset($_POST['login']) && isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['password']) && isset($_POST['new-password'])) {
+        $newLogin = $_POST['login'];
+        $newFirstname = $_POST['firstname'];
+        $newLastname = $_POST['lastname'];
+        $currentPassword = $_POST['password'];
+        $newPassword = $_POST['new-password'];
+
+        // Vérifiez si le mot de passe actuel est correct
+        if ($user->login($user->getLogin(), $currentPassword)) {
+            // Le mot de passe actuel est correct, mettez à jour les informations de l'utilisateur
+            $user->updateProfile($newLogin, $newFirstname, $newLastname, $newPassword);
+
+            // Mise à jour des informations de session
+            $_SESSION['login'] = $newLogin;
+            $_SESSION['firstname'] = $newFirstname;
+            $_SESSION['lastname'] = $newLastname;
+
+            // Redirigez l'utilisateur vers la page d'accueil.
+            echo '<script>
+                     alert("Informations correctement mises à jour.");
+                     window.location.href = "index.php";
+                  </script>';
+        } else {
+            $error = "Informations incorrectes.";
+        }
+    } else {
+        $error = "Veuillez remplir tous les champs du formulaire.";
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -37,8 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="box">
         <h1>Profil</h1>
         <form action="" method="post">
-            <input type="text" name="firstname" placeholder="Prénom" value="<?php echo $user->getFirstname(); ?>" required><br>
-            <input type="text" name="lastname" placeholder="Nom" value="<?php echo $user->getLastname(); ?>" required><br>
+            <input type="text" name="firstname" placeholder="Prénom" value="<?php echo $_SESSION['firstname']; ?>" required><br>
+            <input type="text" name="lastname" placeholder="Nom" value="<?php echo $_SESSION['lastname']; ?>" required><br>
+            <input type="text" name="login" placeholder="Login" value="<?php echo $_SESSION['login']; ?>" required><br>
+            <input type="password" name="password" placeholder="Mot de passe actuel" required><br>
+            <input type="password" name="new-password" placeholder="Nouveau mot de passe" required><br>
             <input id="button" type="submit" value="Mettre à jour">
         </form>
     </div>

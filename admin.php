@@ -4,15 +4,6 @@ session_start();
 
 require_once 'User.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']->getLogin() !== 'admiN1337$') {
-    
-    echo '<script>
-              alert("Informations incorrectes, connectez-vous en admin pour accéder à cette page site.");
-              window.location.href = "index.php";
-          </script>';
-
-}
-
 $users = User::getAllUsers();
 
 ?>

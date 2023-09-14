@@ -5,7 +5,6 @@ class User {
     private $lastname;
     private $login;
     private $password;
-    private $role;
     private $db;
 
     public function __construct() {
@@ -44,30 +43,50 @@ class User {
     }
 
     public function login($login, $password) {
-        // récupérer l'utilisateur par son login.
-        $stmt = $this->db->prepare("SELECT * FROM user WHERE login = ?");
-        $stmt->execute([$login]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && password_verify($password, $user['password'])) {
-            // les informations de connexion sont correctes.
-   
-            $this->id = $user['id'];
-            $this->firstname = $user['firstname'];
-            $this->lastname = $user['lastname'];
-            $this->login = $user['login'];
-            $this->password = $user['password'];
-
-            return true;
-        } else {
-            return false;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $login = $_POST['login'];
+            $password = $_POST['password'];
+    
+            $stmt = $this->db->prepare("SELECT * FROM user WHERE login = :login");
+            $stmt->bindParam(':login', $login);
+            $stmt->execute();
+    
+            if ($stmt->rowCount() > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $hashedPassword = $row['password'];
+                
+    
+                if (password_verify($password, $hashedPassword)) {
+                    $_SESSION['login'] = $row['login'];
+                    $_SESSION['firstname'] = $row['firstname'];
+                    $_SESSION['lastname'] = $row['lastname'];
+                    $_SESSION['password'] = $row['password'];
+    
+                    if ($_SESSION['login'] === 'admiN1337$') {
+                        echo '<script>
+                            alert("Connexion en tant que administrateur réussie ! Vous allez être redirigé vers la page administration.");
+                            window.location.href = "admin.php";
+                        </script>';
+                    } else {
+                        echo'<script>
+                            alert("Connexion réussie ! Vous allez être redirigé vers votre profil.");
+                            window.location.href = "profil.php";
+                        </script>';
+                    }
+                    exit;
+                } else {
+                    echo "<script>alert('Mot de passe incorecte');</script>";
+                }
+            } else {
+                echo "<script>alert('Login incorecte');</script>";
+            }
         }
-    }
+    }    
 
-    public function updateProfile($firstname, $lastname) {
+    public function updateProfile($login, $firstname, $lastname, $password) {
         // mettre à jour les informations du profil dans la base de données.
-        $stmt = $this->db->prepare("UPDATE user SET firstname = ?, lastname = ? WHERE id = ?");
-        $stmt->execute([$firstname, $lastname, $this->id]);
+        $stmt = $this->db->prepare("UPDATE user SET login = ?, firstname = ?, lastname = ?, password = ? WHERE id = ?");
+        $stmt->execute([$login, $firstname, $lastname, $password, $this->id]);
     }
 
     public static function getAllUsers() {
@@ -105,20 +124,32 @@ class User {
         return $this->login;
     }
 
-    public function isAdmin() {
-        // préparez la requête SQL pour récupérer l'utilisateur par son rôle.
-        $stmt = $this->db->prepare("SELECT * FROM user WHERE role = 'admin'");
-        $stmt->execute();
-        
-        // récupérez le résultat de la requête.
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        // vérifiez si un utilisateur avec le rôle 'admin' a été trouvé.
-        if ($user) {
-            return true;
-        }
-        return false;
+    public function getFirstname() {
+        return $this->firstname;
     }
 
+    public function getLastname() {
+        return $this->lastname;
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function setLogin($login) {
+        $this->login = $login;
+    }
+
+    public function setFirstname($firstname) {
+        $this->firstname = $firstname;
+    }
+
+    public function setLastname($lastname) {
+        $this->lastname = $lastname;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
+    }
 }
 ?>
