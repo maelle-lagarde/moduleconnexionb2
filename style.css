@@ -135,3 +135,29 @@ input#button:hover {
 .nav a {
     text-decoration: none;
 }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid grey;
+}
+
+th, td {
+    border: 1px solid grey;
+    padding: 8px;
+}
+
+th {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    margin-right: 20px;
+    background-color: #1A1A40;
+}
+
+td {
+    font-family: 'Syne', sans-serif;
+    font-weight: 400;
+    color: dimgray;
+}
